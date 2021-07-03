@@ -12,7 +12,7 @@
   <% end %>
 
   <%= form.text_field :user_id %>
-  <%= form.text_field :start_date, { class: "daterange" } %>
+  <%= form.datetime_select :start_date %>
 
   <%= form.text_field :name %>
   <%= form.datetime_select :end_date %>
