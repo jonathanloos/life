@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>Life</title>
+    <title><%= content_for?(:title) ? yield(:title) : "Life App" %></title>
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <%= csrf_meta_tags %>
     <%= csp_meta_tag %>
@@ -11,6 +11,19 @@
   </head>
 
   <body>
-    <%= yield %>
+    <div class="container-fluid">
+      <div class="row">
+        <div class="col-3 d-none d-lg-block col-xl-2">
+          <% if content_for?(:sidenav) %>
+            <%= yield :sidenav %>
+          <% end %>
+        </div>
+        <div class="col-sm-12 col-lg-9 col-xl-10">
+          <div class="container mt-4">
+            <%= yield %>
+          </div>
+        </div>
+      </div>
+    </div>
   </body>
 </html>

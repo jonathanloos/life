@@ -1,0 +1,20 @@
+<%= bootstrap_form_with model: event do |form| %>
+  <% if event.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(event.errors.count, "error") %> prohibited this event from being saved:</h2>
+
+      <ul>
+        <% event.errors.each do |error| %>
+          <li><%= error.full_message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <%= form.text_field :user_id %>
+  <%= form.text_field :start_date, { class: "daterange" } %>
+
+  <%= form.text_field :name %>
+  <%= form.datetime_select :end_date %>
+  <%= form.submit %>
+<% end %>
