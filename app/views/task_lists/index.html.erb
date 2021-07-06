@@ -1,0 +1,27 @@
+<p id="notice"><%= notice %></p>
+
+<h1>
+  Task Lists <span class="text-muted fs-5"> - <%= @task_lists.first&.user&.name %>
+  <span class="float-end">
+    <%= link_to 'New Task List', new_task_list_path, class: 'btn btn-primary text-white' %>
+  </span>
+</h1>
+
+<div data-controller="isotope-base">
+  <div data-isotope-base-target="grid">
+    <% @task_lists.each do |task_list| %>
+      <div class="grid-item">
+        <div class="card m-1 border-light shadow-sm">
+          <div class="card-body">
+            <h4><%= task_list.name %></h4>
+            <hr class="mt-0"/>
+            <ul class="list-group">
+              <%= render task_list.tasks %>
+              <%= render partial: 'tasks/form', locals: { task: Task.new(task_list: task_list) } %>
+            </ul>
+          </div>
+        </div>
+      </div>
+    <% end %>
+  </div>
+</div>

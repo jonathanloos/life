@@ -1,0 +1,9 @@
+<li class="list-group-item">
+  <%= bootstrap_form_with model: task do |form| %>
+    <div class="d-flex flex-row">
+      <%= form.hidden_field :task_list_id, value: task.task_list_id %>
+      <%= form.text_field :name, { hide_label: true, wrapper_class: 'flex-grow-1 me-2', class:'border-0', required: true } %>
+      <%= form.submit '+', class: 'float-end btn btn-primary text-white b-inline-block' %>
+    </div>
+  <% end %>
+</li>

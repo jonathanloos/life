@@ -11,8 +11,9 @@
     </div>
   <% end %>
 
-  <%= form.text_field :user_id %>
-  <%= form.datetime_select :start_date %>
+  <%= form.collection_select :user_id, User.all, :id, :name %>
+  <%= form.text_field :start_date, data: { controller: 'date-picker', 'date-picker-target': 'daterange'} %>
+  <%#= form.datetime_select :start_date %>
 
   <%= form.text_field :name %>
   <%= form.datetime_select :end_date %>

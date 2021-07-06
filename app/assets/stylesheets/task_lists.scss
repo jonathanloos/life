@@ -1,0 +1,27 @@
+// Place all the styles related to the taskLists controller here.
+// They will automatically be included in application.css.
+// You can use Sass (SCSS) here: https://sass-lang.com/
+
+@media (max-width: 576px) {
+    .grid {
+      padding: 0 !important;
+    }
+  
+    .grid-item-xs,
+    .grid-item-sm,
+    .grid-item-md,
+    .grid-item-md-tall,
+    .grid-item-lg,
+    .grid-item-xl,
+    .grid-sizer {
+      width: 100% !important;
+      padding-left: 0 !important;
+      padding-right: 0 !important;
+      min-width: 100%;
+    }
+  }
+
+.grid-item { width: 500px; }
+.grid-item--width2 { width: 50%; }
+
+.a { color: inherit; } 
