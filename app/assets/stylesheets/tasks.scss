@@ -23,3 +23,7 @@
     clip: auto;
     white-space: normal;
   }
+
+  .task-row:hover .delete-button{
+    visibility: visible !important;
+  }

@@ -1,3 +1,6 @@
-<li class="list-group-item">
-    <p class="my-2"><%= task.name %></p>
+<li class="list-group-item d-flex justify-content-between align-items-start task-row">
+    <div class="ms-2 me-auto">
+        <%= task.name %>
+    </div>
+    <%= link_to '-', task_path(task), method: :delete, remote: true, class:'text-white btn badge bg-danger rounded-pill text-decoration-none delete-button invisible' %>
 </li>

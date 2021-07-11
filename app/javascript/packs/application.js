@@ -8,10 +8,13 @@ import Turbolinks from "turbolinks"
 import * as ActiveStorage from "@rails/activestorage"
 import "channels"
 
+// Jquery
+require('jquery')
+
 // Bootstrap
 import "bootstrap"
 import 'bootstrap-daterangepicker';
-
+console.log('here')
 // Metafizzy
 // https://packery.metafizzy.co/extras.html#browserify
 var jQueryBridget = require('jquery-bridget');
@@ -20,9 +23,6 @@ jQueryBridget( 'isotope', Isotope, $ );
 
 // Stimulus
 import 'controllers'
-
-// Jquery
-require('jquery')
 
 Rails.start()
 Turbolinks.start()

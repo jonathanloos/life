@@ -10,6 +10,7 @@ export default class extends Controller {
   initialize() { }
 
   connect() {
+      console.log('isotope')
     $(this.gridTarget).isotope({
       // options
       itemSelector: '.grid-item',
