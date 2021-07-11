@@ -1,6 +1,16 @@
-<li class="list-group-item d-flex justify-content-between align-items-start task-row">
-    <div class="ms-2 me-auto">
-        <%= task.name %>
+<li class="list-group-item d-flex flex-row align-items-center task-row p-1">
+    <div class="p-2">
+        <%= bootstrap_form_with url: complete_task_path(task), data: { remote: true } do |form| %>
+            <%= form.check_box :complete, checked: task.complete?, hide_label: true, wrapper_class: 'p-1 m-0', class: 'm-0', data: { controller: 'submit-on-change' } %>
+        <% end %>
     </div>
-    <%= link_to '-', task_path(task), method: :delete, remote: true, class:'text-white btn badge bg-danger rounded-pill text-decoration-none delete-button invisible' %>
+
+    <div class="me-auto body flex-grow-1">
+        <%= bootstrap_form_with model: task, local: false, data: { remote: true } do |form| %>
+            <%= form.text_field :name, id: "task_#{task.id}", hide_label: true, class: 'border-0 task-input', data: { controller: 'submit-on-change' } %>
+        <% end %>
+    </div>
+
+    <%#= link_to '-', task_path(task), method: :delete, remote: true, class:'text-white btn badge bg-danger rounded-pill text-decoration-none delete-button invisible' %>
+    <%= link_to 'Edit', edit_task_path(task), remote: true, class: 'btn btn-light btn-sm invisible edit-button' %>
 </li>

@@ -28,9 +28,11 @@ class TaskListsController < ApplicationController
       if @task_list.save
         format.html { redirect_to @task_list, notice: "Task list was successfully created." }
         format.json { render :show, status: :created, location: @task_list }
+        format.js
       else
         format.html { render :new, status: :unprocessable_entity }
         format.json { render json: @task_list.errors, status: :unprocessable_entity }
+        format.js
       end
     end
   end
@@ -41,9 +43,11 @@ class TaskListsController < ApplicationController
       if @task_list.update(task_list_params)
         format.html { redirect_to @task_list, notice: "Task list was successfully updated." }
         format.json { render :show, status: :ok, location: @task_list }
+        format.js
       else
         format.html { render :edit, status: :unprocessable_entity }
         format.json { render json: @task_list.errors, status: :unprocessable_entity }
+        format.js
       end
     end
   end

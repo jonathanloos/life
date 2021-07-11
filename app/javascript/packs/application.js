@@ -10,11 +10,12 @@ import "channels"
 
 // Jquery
 require('jquery')
+import 'lodash'
 
 // Bootstrap
 import "bootstrap"
 import 'bootstrap-daterangepicker';
-console.log('here')
+
 // Metafizzy
 // https://packery.metafizzy.co/extras.html#browserify
 var jQueryBridget = require('jquery-bridget');
@@ -23,6 +24,11 @@ jQueryBridget( 'isotope', Isotope, $ );
 
 // Stimulus
 import 'controllers'
+
+// Custom jquery plugins
+$.fn.dispatchCustomEvent = function(eventName) {
+    $(document).trigger(eventName);
+};
 
 Rails.start()
 Turbolinks.start()

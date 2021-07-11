@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_07_05_033042) do
+ActiveRecord::Schema.define(version: 2021_07_11_173120) do
 
   create_table "events", force: :cascade do |t|
     t.integer "user_id", null: false
@@ -35,6 +35,11 @@ ActiveRecord::Schema.define(version: 2021_07_05_033042) do
     t.integer "task_list_id", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.datetime "completed_at"
+    t.datetime "due_date"
+    t.string "notes"
+    t.integer "event_id"
+    t.index ["event_id"], name: "index_tasks_on_event_id"
     t.index ["task_list_id"], name: "index_tasks_on_task_list_id"
   end
 
@@ -49,5 +54,6 @@ ActiveRecord::Schema.define(version: 2021_07_05_033042) do
 
   add_foreign_key "events", "users"
   add_foreign_key "task_lists", "users"
+  add_foreign_key "tasks", "events"
   add_foreign_key "tasks", "task_lists"
 end

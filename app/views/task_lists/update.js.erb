@@ -1,0 +1,4 @@
+$('#task_list_<%= @task_list.id %>').replaceWith("<%= j render partial: 'task_lists/task_list', locals: { task_list: @task_list } %>")
+$('#task_list_name_<%= @task_list.id %>').trigger('focus');
+
+$.fn.dispatchCustomEvent('reload.isotope.base');

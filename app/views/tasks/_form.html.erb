@@ -2,7 +2,7 @@
   <%= bootstrap_form_with model: task, data: { remote: true } do |form| %>
     <div class="d-flex flex-row m-1">
       <%= form.hidden_field :task_list_id, value: task.task_list_id %>
-      <%= form.text_field :name, { hide_label: true, wrapper_class: 'flex-grow-1 me-2', class:'border-0', required: true } %>
+      <%= form.text_field :name, { id: "create_task_#{task.task_list_id}", hide_label: true, wrapper_class: 'flex-grow-1 me-2', class:'border-0', required: true } %>
       <%= form.submit '+', class: 'float-end btn btn-primary btn-sm text-white b-inline-block' %>
     </div>
   <% end %>

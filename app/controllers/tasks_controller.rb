@@ -1,5 +1,5 @@
 class TasksController < ApplicationController
-  before_action :set_task, only: %i[ show edit update destroy ]
+  before_action :set_task, only: %i[ show edit update destroy complete ]
   layout 'main'
 
   # GET /tasks or /tasks.json
@@ -18,6 +18,9 @@ class TasksController < ApplicationController
 
   # GET /tasks/1/edit
   def edit
+    respond_to do |format|
+      format.js
+    end
   end
 
   # POST /tasks or /tasks.json
@@ -59,6 +62,15 @@ class TasksController < ApplicationController
       format.html { redirect_to tasks_url, notice: "Task was successfully destroyed." }
       format.json { head :no_content }
       format.js
+    end
+  end
+
+  def complete
+    @task.completed_at = params[:complete].to_boolean ? DateTime.now : nil
+    @task.save!
+
+    respond_to do |format|
+      format.js { render :create }
     end
   end
 
