@@ -8,13 +8,15 @@ import Turbolinks from "turbolinks"
 import * as ActiveStorage from "@rails/activestorage"
 import "channels"
 
-// Jquery
+// Tools
 require('jquery')
 import 'lodash'
+require('select2')
 
 // Bootstrap
 import "bootstrap"
-import 'bootstrap-daterangepicker';
+require('bootstrap-datepicker')
+import 'bootstrap-icons/font/bootstrap-icons.css'
 
 // Metafizzy
 // https://packery.metafizzy.co/extras.html#browserify

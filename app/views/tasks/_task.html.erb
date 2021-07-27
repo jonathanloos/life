@@ -1,4 +1,4 @@
-<li class="list-group-item d-flex flex-row align-items-center task-row p-1">
+<li id="task_<%= task.id %>" class="list-group-item d-flex flex-row align-items-center task-row p-1">
     <div class="p-2">
         <%= bootstrap_form_with url: complete_task_path(task), data: { remote: true } do |form| %>
             <%= form.check_box :complete, checked: task.complete?, hide_label: true, wrapper_class: 'p-1 m-0', class: 'm-0', data: { controller: 'submit-on-change' } %>
@@ -11,6 +11,6 @@
         <% end %>
     </div>
 
-    <%#= link_to '-', task_path(task), method: :delete, remote: true, class:'text-white btn badge bg-danger rounded-pill text-decoration-none delete-button invisible' %>
-    <%= link_to 'Edit', edit_task_path(task), remote: true, class: 'btn btn-light btn-sm invisible edit-button' %>
+    <%= link_to "<i class='bi bi-pencil'></i>".html_safe, edit_task_path(task), remote: true, class: 'btn btn-light btn-sm invisible edit-button me-2' %>
+    <%= link_to "<i class='bi bi-trash'></i>".html_safe, task_path(task), method: :delete, remote: true, class:'btn btn-danger btn-sm delete-button invisible' %>
 </li>

@@ -1,0 +1,82 @@
+# https://codewithhugo.com/docker-compose-local-https/
+version: '3.6'
+
+volumes:
+  postgres_data:
+  bundle:
+  node_modules:
+  rails_cache:
+  public:
+
+networks:
+  hangar-net:
+    name: hangar_network
+
+services:
+  app:
+    container_name: dispatch_app
+    build:
+      context: ../
+      dockerfile: docker/app/Dockerfile.slim.dev
+    image: dispatch:dev
+    command: /bin/bash /app/boot-app.sh
+    environment:
+      - RAILS_ENV=development
+      - RAILS_LOG_TO_STDOUT=true
+      - RAILS_SERVE_STATIC_FILES=true
+      - WEBPACKER_DEV_SERVER_HOST=webpacker
+    working_dir: /app
+    depends_on:
+      - db
+      - webpacker
+    links:
+      - db
+    ports:
+      - 3000:3000
+      - 1234:1234
+      - 26162:26162
+    stdin_open: true
+    tty: true
+    volumes:
+      - ..:/app:cached
+      - rails_cache:/app/tmp/cache
+      - bundle:/usr/local/bundle
+      - node_modules:/app/node_modules
+      - public:/app/public/packs
+    tmpfs:
+      - /tmp
+    networks:
+      - hangar-net
+  db:
+    image: postgres:11.6-alpine
+    environment:
+      - POSTGRES_HOST_AUTH_METHOD=trust
+    container_name: dispatch_db
+    volumes:
+      - ../docker/db/certs/server.crt:/var/lib/postgresql/server.crt
+      - ../docker/db/certs/server.key:/var/lib/postgresql/server.key
+      - postgres_data:/var/lib/postgresql/data
+      - ../docker/db/dispatch-role.sql:/docker-entrypoint-initdb.d/dispatch-role.sql
+    networks:
+      - hangar-net
+  webpacker:
+    build:
+      context: ../
+      dockerfile: docker/app/Dockerfile.slim.dev
+    container_name: dispatch_webpacker
+    image: dispatch:dev
+    command: /bin/bash /app/boot-webpack.sh
+    volumes:
+      - ..:/app:cached
+      - bundle:/usr/local/bundle
+      - node_modules:/app/node_modules
+      - public:/app/public/packs
+    environment:
+      - WEBPACKER_DEV_SERVER_HOST=0.0.0.0
+      - NODE_ENV=development
+      - RAILS_ENV=development
+      - WEBPACK_MEASURE=false
+    ports:
+      - "3035:3035"
+    networks:
+      - hangar-net

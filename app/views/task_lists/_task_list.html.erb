@@ -7,8 +7,8 @@
         </h4>
         <hr class="mt-0"/>
         <ul class="list-group">
-            <%= render task_list.tasks %>
-            <%= render partial: 'tasks/form', locals: { task: Task.new(task_list: task_list) } %>
+            <%= render task_list.incomplete_tasks %>
+            <%= render partial: 'tasks/list_item_form', locals: { task: Task.new(task_list: task_list) } %>
         </ul>
     </div>
 </div>
