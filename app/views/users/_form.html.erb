@@ -1,4 +1,4 @@
-<%= form_with(model: user) do |form| %>
+<%= bootstrap_form_with(model: user) do |form| %>
   <% if user.errors.any? %>
     <div id="error_explanation">
       <h2><%= pluralize(user.errors.count, "error") %> prohibited this user from being saved:</h2>
@@ -12,23 +12,19 @@
   <% end %>
 
   <div class="field">
-    <%= form.label :first_name %>
     <%= form.text_field :first_name %>
   </div>
 
   <div class="field">
-    <%= form.label :last_name %>
     <%= form.text_field :last_name %>
   </div>
 
   <div class="field">
-    <%= form.label :email %>
     <%= form.text_field :email %>
   </div>
 
   <div class="field">
-    <%= form.label :birthday %>
-    <%= form.datetime_select :birthday %>
+    <%= form.text_field :birthday, data: { controller: 'date-picker', 'date-picker-target': 'daterange', 'date-picker-options-value': '{ "singleDatePicker": true, "showDropdowns": true }'} %>
   </div>
 
   <div class="actions">

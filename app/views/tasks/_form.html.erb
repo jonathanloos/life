@@ -1,9 +1,9 @@
 <%= bootstrap_form_with model: task, data: { remote: true } do |form| %>
   <%= form.hidden_field :task_list_id, value: task.task_list_id %>
 
-  <%= form.text_field :due_date, { data: { provide: 'datepicker' } } %>
+  <%= form.text_field :due_date, data: { controller: 'date-picker', 'date-picker-target': 'daterange', 'date-picker-options-value': '{ "singleDatePicker": true, "showDropdowns": true }'} %>
 
   <%= form.text_field :notes %>
 
-  <%= form.submit class: 'btn btn-primary' %>
+  <%= form.submit class: 'btn btn-primary float-end mt-2' %>
 <% end %>

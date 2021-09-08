@@ -12,5 +12,6 @@
   <% end %>
   <%= form.collection_select :user_id, User.all, :id, :name %>
   <%= form.text_field :name %>
+  <%= form.select :do_date, TaskList.do_dates.keys.map{|k| [k.humanize, k]}%>
   <%= form.submit %>
 <% end %>

@@ -1,11 +1,11 @@
 <div class="modal-dialog">
   <div class="modal-content">
     <div class="modal-header">
-      <h5 class="modal-title"><%= task.name %></h5>
+      <h5 class="modal-title"><%= task_list.name %></h5>
       <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
     </div>
     <div class="modal-body">
-      <%= render partial:'tasks/form', locals: { task: task } %>
+      <%= render partial:'task_lists/form', locals: { task_list: task_list } %>
     </div>
   </div>
 </div>

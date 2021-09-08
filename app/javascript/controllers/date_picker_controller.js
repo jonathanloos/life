@@ -5,11 +5,16 @@ export default class extends Controller {
   static values = { options : String };
 
   initialize() {
+    let date_formatting = {
+      locale: {
+        format: "YYYY-MM-DD",
+      },
+    };
 
     if(this.optionsValue.length > 0){
-      $(this.daterangeTarget).daterangepicker(JSON.parse(this.optionsValue));
+      $(this.daterangeTarget).daterangepicker({ ...JSON.parse(this.optionsValue), ...date_formatting});
     } else {
-      $(this.daterangeTarget).daterangepicker();
+      $(this.daterangeTarget).daterangepicker(date_formatting);
     }
   }
 
