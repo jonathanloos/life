@@ -9,16 +9,16 @@ volumes:
   public:
 
 networks:
-  hangar-net:
-    name: hangar_network
+  life-net:
+    name: life_network
 
 services:
   app:
-    container_name: dispatch_app
+    container_name: life_app
     build:
       context: ../
       dockerfile: docker/app/Dockerfile.slim.dev
-    image: dispatch:dev
+    image: life:dev
     command: /bin/bash /app/boot-app.sh
     environment:
       - RAILS_ENV=development
@@ -46,25 +46,24 @@ services:
     tmpfs:
       - /tmp
     networks:
-      - hangar-net
+      - life-net
   db:
     image: postgres:11.6-alpine
     environment:
       - POSTGRES_HOST_AUTH_METHOD=trust
-    container_name: dispatch_db
+    container_name: life_db
     volumes:
       - ../docker/db/certs/server.crt:/var/lib/postgresql/server.crt
       - ../docker/db/certs/server.key:/var/lib/postgresql/server.key
       - postgres_data:/var/lib/postgresql/data
-      - ../docker/db/dispatch-role.sql:/docker-entrypoint-initdb.d/dispatch-role.sql
     networks:
-      - hangar-net
+      - life-net
   webpacker:
     build:
       context: ../
       dockerfile: docker/app/Dockerfile.slim.dev
-    container_name: dispatch_webpacker
-    image: dispatch:dev
+    container_name: life_webpacker
+    image: life:dev
     command: /bin/bash /app/boot-webpack.sh
     volumes:
       - ..:/app:cached
@@ -79,4 +78,4 @@ services:
     ports:
       - "3035:3035"
     networks:
-      - hangar-net
+      - life-net

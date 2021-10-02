@@ -1,0 +1,34 @@
+# start with rails-run
+FROM krsyoung/rails-run:3.0.2-slim-buster
+
+# App location is /app
+WORKDIR /app
+
+# Set environment as production
+ENV RAILS_ENV production
+
+# Bundler config
+ENV GEM_HOME=/app/vendor/bundle
+ENV BUNDLE_PATH=/app/vendor/bundle
+ENV BUNDLE_APP_CONFIG=/app/.bundle
+ENV BUNDLE_BIN=$BUNDLE_PATH/bin
+ENV PATH /app/bin:$BUNDLE_BIN:$PATH
+
+# exclude development and test packages
+RUN bundle config --local without "development test"
+
+# Expose Puma port
+EXPOSE 3000
+
+# Add Rails app
+COPY . /app/
+
+# Remove caching files
+RUN rm -rf /app/tmp/cache/assets /app/tmp/cache/webpacker
+
+# Save timestamp of image building
+RUN date -u > BUILD_TIME
+
+# Start up
+RUN chmod +x /app/boot-app.sh
+CMD ["/app/boot-app.sh"]

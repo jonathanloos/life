@@ -12,8 +12,11 @@
 
 ActiveRecord::Schema.define(version: 2021_07_05_033042) do
 
+  # These are extensions that must be enabled in order to support this database
+  enable_extension "plpgsql"
+
   create_table "events", force: :cascade do |t|
-    t.integer "user_id", null: false
+    t.bigint "user_id", null: false
     t.datetime "start_date"
     t.string "name"
     t.datetime "end_date"
@@ -24,7 +27,7 @@ ActiveRecord::Schema.define(version: 2021_07_05_033042) do
 
   create_table "task_lists", force: :cascade do |t|
     t.string "name"
-    t.integer "user_id", null: false
+    t.bigint "user_id", null: false
     t.integer "do_date"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
@@ -33,8 +36,8 @@ ActiveRecord::Schema.define(version: 2021_07_05_033042) do
 
   create_table "tasks", force: :cascade do |t|
     t.string "name"
-    t.integer "task_list_id", null: false
-    t.integer "event_id"
+    t.bigint "task_list_id", null: false
+    t.bigint "event_id"
     t.datetime "completed_at"
     t.datetime "due_date"
     t.text "notes"
