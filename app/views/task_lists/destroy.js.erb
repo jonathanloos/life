@@ -1,0 +1,3 @@
+$('#task_list_<%= @task.task_list_id %>').remove();
+
+$.fn.dispatchCustomEvent('reload.isotope.base');

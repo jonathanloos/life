@@ -4,7 +4,8 @@ class TaskListsController < ApplicationController
   
   # GET /task_lists or /task_lists.json
   def index
-    @task_lists = TaskList.all
+    @user = User.all.first
+    @task_lists = TaskList.where(user: @user)
   end
 
   # GET /task_lists/1 or /task_lists/1.json
@@ -24,8 +25,11 @@ class TaskListsController < ApplicationController
   def create
     @task_list = TaskList.new(task_list_params)
 
+    @task_lists = TaskList.all
+
     respond_to do |format|
-      if @task_list.save
+      if @task_list.save!
+        TaskListCreatedNotification.with(task_list: @task_list).deliver_later(@task_list.user)
         format.html { redirect_to @task_list, notice: "Task list was successfully created." }
         format.json { render :show, status: :created, location: @task_list }
         format.js

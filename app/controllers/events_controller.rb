@@ -5,6 +5,7 @@ class EventsController < ApplicationController
   # GET /events or /events.json
   def index
     @events = Event.all
+    @user = User.all.first
   end
 
   # GET /events/1 or /events/1.json

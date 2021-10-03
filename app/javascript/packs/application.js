@@ -32,6 +32,14 @@ $.fn.dispatchCustomEvent = function(eventName) {
     $(document).trigger(eventName);
 };
 
+// notifications
+import AWN from "awesome-notifications"
+
+// Initialize instance of AWN
+let globalOptions =  {}
+window.notifier = new AWN(globalOptions)
+
+
 Rails.start()
 Turbolinks.start()
 ActiveStorage.start()

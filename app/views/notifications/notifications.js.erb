@@ -1,0 +1,1 @@
+$(".notifications").html("<%= escape_javascript( render(Notification::ListComponent.new(notifications: @user.notifications.newest_first)) ) %> ");

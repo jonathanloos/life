@@ -1,0 +1,13 @@
+<div class="dropdown-menu notifications" aria-labelledby="dropdownMenuButton1" data-simplebar>
+  <% @notifications.each do |notification| %>
+    <%= link_to toggle_read_user_notification_path(notification.recipient, notification), class: "dropdown-item d-flex flex-row" do %>
+      <%= notification.to_notification.message %>
+    <% end %>
+  <% end %>
+
+  <% if @notifications.any? %>
+    <%= link_to user_notifications_path(@notifications.first.recipient), class: 'dropdown-item text-center text-primary' do %>
+      View All
+    <% end %>
+  <% end %>
+</div>

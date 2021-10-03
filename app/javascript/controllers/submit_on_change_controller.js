@@ -1,11 +1,7 @@
 import { Controller } from 'stimulus'; 
+let debounce = require('lodash/debounce');
 
-var frequency = 200;
-var drawDebouncedEvent = _.debounce(function(element){
-    console.log($(element).closest("form")[0])
-    Rails.fire($(element).closest("form")[0], 'submit');
-
-}, frequency*4, {leading:false, trailing:true});
+var frequency = 300;
 
 export default class extends Controller {
   // ['target']
@@ -14,13 +10,18 @@ export default class extends Controller {
   // { ping: String }
   static values = {};
 
-  initialize() { }
+  initialize() {
+    // Debounce the submit.
+    this.submit = debounce(this.submit, frequency*4, {leading:false, trailing:true}).bind(this)
+  }
 
   connect() {
-      $(this.element).on('change keyup', () => {
-        console.log('leggo')
-        drawDebouncedEvent(this.element);
-        
-      });
+    $(this.element).on('change keyup', () => {
+      this.submit();
+    });
+  }
+
+  submit(){
+    Rails.fire($(this.element).closest("form")[0], 'submit');
   }
 }

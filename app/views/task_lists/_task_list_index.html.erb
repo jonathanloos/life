@@ -1,0 +1,15 @@
+<div data-controller="isotope-base">
+  <div data-isotope-base-target="grid" class="grid">
+    <div id="task_list_index">
+      <% task_lists.each do |task_list| %>
+        <div class="grid-item">
+          <%= render task_list %>
+        </div>
+      <% end %>
+      <% task_list = TaskList.new(user: User.first) %>
+      <div class="grid-item">
+        <%= render task_list %>
+      </div>
+    </div>
+  </div>
+</div>

@@ -4,12 +4,13 @@
             <h4 class="m-0 flex-grow-1">
                 <%= bootstrap_form_with model: task_list, local: false, data: { remote: true } do |form| %>
                     <%= form.hidden_field :user_id %>
-                    <%= form.text_field :name, id: "task_list_name_#{task_list.id}", hide_label: true, class: 'border-0 ps-0', data: { controller: 'submit-on-change' } %>
+                    <%= form.text_field :name, id: "task_list_name_#{task_list.id}", hide_label: true, class: 'border-0 ps-0', placeholder: 'Type to create a new task list...', data: { controller: 'submit-on-change' } %>
                 <% end %>
             </h4>
-
-            <%= link_to "<i class='bi bi-pencil'></i>".html_safe, edit_task_list_path(task_list), remote: true, class: 'btn btn-light btn-sm invisible edit-button me-2' %>
-            <%= link_to "<i class='bi bi-trash'></i>".html_safe, task_list_path(task_list), method: :delete, remote: true, class:'btn btn-danger btn-sm text-white delete-button invisible' %>
+            <% if task_list.persisted? %>
+                <%= link_to "<i class='bi bi-pencil'></i>".html_safe, edit_task_list_path(task_list), remote: true, class: 'btn btn-light btn-sm invisible edit-button me-2' %>
+                <%= link_to "<i class='bi bi-trash'></i>".html_safe, task_list_path(task_list), method: :delete, remote: true, class:'btn btn-danger btn-sm text-white delete-button invisible' %>
+            <% end %>
         </div>
         <hr class="m-0 <%= 'mb-3' if task_list.do_date.nil? %>"/>
         <% if task_list.do_date.present? %>
