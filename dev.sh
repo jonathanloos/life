@@ -16,6 +16,7 @@ function help () {
   echo "  go      - start the app and attach a console"
   echo "  shell   - open a shell in app"
   echo "  down    - down the docker environment"
+  echo "  console - open rails console in app"
 }
 
 function dev () {
@@ -44,6 +45,10 @@ function build () {
 
 function shell () {
   docker-compose $DOCKER_COMPOSE_OPTIONS run --rm app /bin/sh
+}
+
+function console () {
+  docker-compose $DOCKER_COMPOSE_OPTIONS run --rm app rails console
 }
 
 # launch a life development environment
