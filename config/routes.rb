@@ -1,4 +1,9 @@
 Rails.application.routes.draw do
+  devise_for :users, path: 'auth', path_names: { sign_in: 'login', sign_out: 'logout', password: 'secret', confirmation: 'verification', unlock: 'unblock', registration: 'register', sign_up: 'cmon_let_me_in' }
+  
+  # open /mail in dev mode to debug outgoing mail
+  mount LetterOpenerWeb::Engine, at: "/mail" if Rails.env.development?
+
   resources :tasks do 
     post :complete, on: :member
   end

@@ -11,7 +11,7 @@
     </div>
   <% end %>
 
-  <%= form.collection_select :user_id, User.all, :id, :name, {}, { data: { controller: 'select2'} } %>
+  <%= form.hidden_field :user_id, value: current_user.id %>
   <%= form.text_field :start_date, data: { controller: 'date-picker', 'date-picker-target': 'daterange', 'date-picker-options-value': '{ "singleDatePicker": true, "showDropdowns": true }'} %>
   <%= form.text_field :end_date, data: { controller: 'date-picker', 'date-picker-target': 'daterange', 'date-picker-options-value': '{ "singleDatePicker": true, "showDropdowns": true }'} %>
 

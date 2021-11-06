@@ -2,4 +2,4 @@
 
 <h1>Task Lists</h1>
 
-<%= render partial: 'task_lists/task_list_index', locals: { task_lists: @task_lists}%>
+<%= render partial: 'task_lists/task_list_index', locals: { task_lists: @task_lists, user: current_user }%>

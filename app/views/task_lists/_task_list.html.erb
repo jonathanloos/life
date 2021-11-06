@@ -3,7 +3,7 @@
         <div class="d-flex flex-row task-row">
             <h4 class="m-0 flex-grow-1">
                 <%= bootstrap_form_with model: task_list, local: false, data: { remote: true } do |form| %>
-                    <%= form.hidden_field :user_id %>
+                    <%= form.hidden_field :user_id, value: user.id %>
                     <%= form.text_field :name, id: "task_list_name_#{task_list.id}", hide_label: true, class: 'border-0 ps-0', placeholder: 'Type to create a new task list...', data: { controller: 'submit-on-change' } %>
                 <% end %>
             </h4>

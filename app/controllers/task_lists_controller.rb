@@ -4,8 +4,7 @@ class TaskListsController < ApplicationController
   
   # GET /task_lists or /task_lists.json
   def index
-    @user = User.all.first
-    @task_lists = TaskList.where(user: @user)
+    @task_lists = TaskList.where(user: current_user)
   end
 
   # GET /task_lists/1 or /task_lists/1.json
@@ -29,6 +28,8 @@ class TaskListsController < ApplicationController
 
     respond_to do |format|
       if @task_list.save!
+        PushNotificationChannel.wire(current_user, { text: "#{@task_list.name}, a new task list, was created.", task_lists: TaskList.where(user: current_user), user: current_user })
+
         TaskListCreatedNotification.with(task_list: @task_list).deliver_later(@task_list.user)
         format.html { redirect_to @task_list, notice: "Task list was successfully created." }
         format.json { render :show, status: :created, location: @task_list }

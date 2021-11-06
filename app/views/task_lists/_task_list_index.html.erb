@@ -3,12 +3,12 @@
     <div id="task_list_index">
       <% task_lists.each do |task_list| %>
         <div class="grid-item">
-          <%= render task_list %>
+          <%= render partial: 'task_lists/task_list', locals: { task_list: task_list, user: user } %>
         </div>
       <% end %>
-      <% task_list = TaskList.new(user: User.first) %>
+      <% task_list = TaskList.new(user: user) %>
       <div class="grid-item">
-        <%= render task_list %>
+        <%= render partial: 'task_lists/task_list', locals: { task_list: task_list, user: user } %>
       </div>
     </div>
   </div>

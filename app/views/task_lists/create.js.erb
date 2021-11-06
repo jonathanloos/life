@@ -1,9 +1,6 @@
-$('#task_list_index').replaceWith("<%= j render partial: 'task_lists/task_list_index', locals: { task_lists: @task_lists } %>")
-$('#task_list_name_<%= @task_list.id %>').trigger('focus');
-
 // Workaround to select end of input.
 var tmpStr = $('#task_list_name_<%= @task_list.id %>').val();
 $('#task_list_name_<%= @task_list.id %>').val('');
 $('#task_list_name_<%= @task_list.id %>').val(tmpStr);
 
-$.fn.dispatchCustomEvent('reload.isotope.base');
+// $.fn.dispatchCustomEvent('reload.isotope.base');

@@ -65,6 +65,10 @@ function down () {
   docker-compose $DOCKER_COMPOSE_OPTIONS down -v --rmi all
 }
 
+function debug () {
+  docker attach life_app
+}
+
 
 # call mode unless the variable is already set
 if [ -z "$RUN_MODE" ]; then
