@@ -1,40 +1,27 @@
 # https://codewithhugo.com/docker-compose-local-https/
 version: '3.6'
 
-volumes:
-  postgres_data:
-  bundle:
-  node_modules:
-  rails_cache:
-  public:
-
 networks:
   life-net:
     name: life_network
 
 services:
-  app:
-    container_name: life_app
+  x-app: &life_app
     build:
-      context: ../
+      context: "."
+      target: "app"
       dockerfile: docker/app/Dockerfile.slim.dev
     image: life:dev
     command: /bin/bash /app/boot-app.sh
-    environment:
-      - RAILS_ENV=development
-      - RAILS_LOG_TO_STDOUT=true
-      - RAILS_SERVE_STATIC_FILES=true
-      - WEBPACKER_DEV_SERVER_HOST=webpacker
+    env_file:
+        - ".env"
     working_dir: /app
     depends_on:
       - db
       - webpacker
+      - redis
     links:
       - db
-    ports:
-      - 3000:3000
-      - 1234:1234
-      - 26162:26162
     stdin_open: true
     tty: true
     volumes:
@@ -47,6 +34,7 @@ services:
       - /tmp
     networks:
       - life-net
+
   db:
     image: postgres:11.6-alpine
     environment:
@@ -58,6 +46,23 @@ services:
       - postgres_data:/var/lib/postgresql/data
     networks:
       - life-net
+
+  web:
+    <<: *life_app
+    deploy:
+      resources:
+        limits:
+          cpus: "${DOCKER_WEB_CPUS:-0}"
+          memory: "${DOCKER_WEB_MEMORY:-0}"
+    # healthcheck:
+    #   test: "${DOCKER_WEB_HEALTHCHECK_TEST:-curl localhost:3000/up}"
+    #   interval: "60s"
+    #   timeout: "3s"
+    #   start_period: "5s"
+    #   retries: 3
+    ports:
+      - "${DOCKER_WEB_PORT_FORWARD:-127.0.0.1:3000}:3000"
+
   webpacker:
     build:
       context: ../
@@ -79,3 +84,52 @@ services:
       - "3035:3035"
     networks:
       - life-net
+  
+  redis:
+    container_name: life_redis
+    deploy:
+      resources:
+        limits:
+          cpus: "${DOCKER_REDIS_CPUS:-0}"
+          memory: "${DOCKER_REDIS_MEMORY:-0}"
+    env_file:
+      - ".env"
+    image: "redis:6.2.6-bullseye"
+    restart: "${DOCKER_RESTART_POLICY:-unless-stopped}"
+    stop_grace_period: "3s"
+    ports:
+      - "6379:6379"
+    volumes:
+      - "redis:/data"
+  
+  worker:
+    container_name: life_worker
+    <<: *life_app
+    command: "sidekiq -C config/sidekiq.yml"
+    entrypoint: []
+    deploy:
+      resources:
+        limits:
+          cpus: "${DOCKER_WORKER_CPUS:-0}"
+          memory: "${DOCKER_WORKER_MEMORY:-0}"
+
+  cable:
+    container_name: life_cable
+    <<: *life_app
+    command: "puma -p 28080 cable/config.ru"
+    entrypoint: []
+    deploy:
+      resources:
+        limits:
+          cpus: "${DOCKER_CABLE_CPUS:-0}"
+          memory: "${DOCKER_CABLE_MEMORY:-0}"
+    ports:
+      - "${DOCKER_CABLE_PORT_FORWARD:-127.0.0.1:28080}:28080"
+
+volumes:
+  postgres_data:
+  bundle:
+  node_modules:
+  rails_cache:
+  public:
+  redis:

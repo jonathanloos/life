@@ -1,6 +1,6 @@
 import consumer from "./consumer"
 
-consumer.subscriptions.create("PushNotificationChannel", {
+consumer.subscriptions.create("TaskListChannel", {
   connected() {
     // Called when the subscription is ready for use on the server
     console.log("Connected");
@@ -13,11 +13,9 @@ consumer.subscriptions.create("PushNotificationChannel", {
 
   received(data) {
     // Called when there's incoming data on the websocket for this channel
-    console.log(data.body.html)
-    console.log(this._parseHTMLResponse(data.body.html))
-    console.log($('#task_list_index'))
     $('#task_list_index').replaceWith(this._parseHTMLResponse(data.body.html));
     $.fn.dispatchCustomEvent('reload.isotope.base');
+    console.log('here')
     window.notifier.success(data.message)
   },
 

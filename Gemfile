@@ -10,6 +10,7 @@ gem 'rails', '~> 6.1.4'
 
 # Use postgres
 gem 'pg'
+gem 'pg_search'
 # Use Puma as the app server
 gem 'puma', '~> 5.0'
 # Use SCSS for stylesheets
@@ -21,7 +22,7 @@ gem 'turbolinks', '~> 5'
 # Build JSON APIs with ease. Read more: https://github.com/rails/jbuilder
 gem 'jbuilder', '~> 2.7'
 # Use Redis adapter to run Action Cable in production
-# gem 'redis', '~> 4.0'
+gem 'redis', '4.5.1'
 # Use Active Model has_secure_password
 # gem 'bcrypt', '~> 3.1.7'
 
@@ -30,6 +31,9 @@ gem 'jbuilder', '~> 2.7'
 
 # notifications
 gem "noticed"
+
+# action cable / redis
+gem 'sidekiq', '~> 6.2.1'
 
 # Auth
 gem 'devise'
@@ -40,6 +44,9 @@ gem 'bootsnap', '>= 1.4.4', require: false
 # Style
 gem 'bootstrap_form', '>= 4.5.0'
 gem "view_component", require: "view_component/engine"
+
+# Feedback
+# gem 'rails-humble-IT', '0.1.4', git: 'https://github.com/jonathanloos/rails-humble-IT'
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console

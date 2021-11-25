@@ -1,6 +1,5 @@
-class PushNotificationChannel < ApplicationCable::Channel
+class TaskListChannel < ApplicationCable::Channel
   def subscribed
-    # stream_from "push_notification_channel"
     stream_for current_user
   end
 
